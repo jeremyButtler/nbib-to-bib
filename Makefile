@@ -52,7 +52,7 @@ all: getLibiconvStatic getUnac
         unac.c\
         $(gccArgs)
 
-make noaccent:
+make normaccent:
 	$(CC)\
       -static\
       -DNORMACCENT\

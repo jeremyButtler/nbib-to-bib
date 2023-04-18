@@ -41,7 +41,7 @@ PubMed files can be downloaded from a pubmed search by
   clicking save (under search box)-> format -> 
   selecting the PubMed format -> create file.
 
-## How to run
+## Running:
 
 The help message for pubmedToBib can be printed with 
   -h. A further help message showing the fine tuning
@@ -94,7 +94,7 @@ pubmedToBib -h | less
 pubmedToBib -bib-help | less
 ```
 
-## Build:
+## Building:
 
 PubmedToBib depends on unac to remove accents from the
   first authors last name when building the citation key

@@ -99,7 +99,8 @@ pubmedToBib -bib-help | less
 PubmedToBib depends on unac to remove accents from the
   first authors last name when building the citation key
   for the bibtex file. This feature can be removed by
-  running make normaccent.
+  running make normaccent. However, this means that the
+  citation key will only use the year and pubmed id.
 
 During the build both unac and libiconv-1.9.1, which unac
   depends on are downloaded using curl and git. 
@@ -113,11 +114,18 @@ You can change the gcc complied used with make by using
 
 Dependencies:
 
-- unac [https://github.com/QuickDict/unac](https://github.com/QuickDict/unac)
-- [ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz](ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz)
+- unac (Downloaded during installation)
+  - [https://github.com/QuickDict/unac](https://github.com/QuickDict/unac)
+  - Removed with make normaccent
+- libconiv-1.9.1 (Download during installion)
+  - [ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz](ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz)
+  - Removed with make normaccent
 - Curl: Used to download libiconv-1.9.1
+  - Removed with make normaccent
 - Git: Used to download unac
+  - Removed with make normaccent
 - Sed: To remove the version number function from unac.c/h
+  - Removed with make normaccent
 - Modern gcc compiler
 
 ```
@@ -133,7 +141,7 @@ chmod a+x /path/to/install/pubmedToBib
 ```
 # openbsd
 
-make CC=egcc
+make CC=egcc  # cc is a bit to old for libiconv & unac
 # make normaccent # for a no dependecy build
 make clean
 cp pubmedToBib /path/to/install

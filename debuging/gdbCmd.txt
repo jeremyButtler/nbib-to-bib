@@ -1,0 +1,11 @@
+file pubmedToBib
+
+#b pubmedToBib.c:464
+b cnvtPubmedToBib.c:113
+#b cnvtPubmedToBib.c:113 if *tmpCStr == 'M' && *(tmpCStr + 1) == 'H'
+#b cStrFun.c:298
+
+#r -pubmed tmp.pubmed -p-mesh-terms > tmp.bib
+r -pubmed pubmed-TBEV-set.txt -p-mesh-terms -tag "thisis a long tag" -tag "tag 2" -tag "tag 3" -tag "tag 4" -tag "tag 5" -tag "tag 6" -tag "tag 7" -tag "tag 8" -tag "tag 9" -tag "tag 10" > tmp.bib
+#r -pubmed pubmed-27087689.txt > tmp.bib
+#r -no-doi -no-journal-id -no-month -no-day -no-volume -no-issue -no-page-number -no-edition -no-pmid -p-isbn -no-issn -no-url -no-abstract -p-journal-short -p-article-type -no-mesh-terms -no-keywords -no-file-tag -no-tags-tag -no-supplemental-tag -no-notesp-tag -no-pmc -pubmed pubmed-27087689.txt > tmp.bib

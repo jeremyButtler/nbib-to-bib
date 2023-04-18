@@ -1,0 +1,273 @@
+PMID- 32127025
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20201207
+LR  - 20201214
+IS  - 1742-2094 (Electronic)
+IS  - 1742-2094 (Linking)
+VI  - 17
+IP  - 1
+DP  - 2020 Mar 3
+TI  - Pathological modeling of TBEV infection reveals differential innate immune 
+      responses in human neurons and astrocytes that correlate with their 
+      susceptibility to infection.
+PG  - 76
+LID - 10.1186/s12974-020-01756-x [doi]
+LID - 76
+AB  - BACKGROUND: Tick-borne encephalitis virus (TBEV) is a member of the Flaviviridae 
+      family, Flavivirus genus, which includes several important human pathogens. It is 
+      responsible for neurological symptoms that may cause permanent disability or 
+      death, and, from a medical point of view, is the major arbovirus in 
+      Central/Northern Europe and North-Eastern Asia. TBEV tropism is critical for 
+      neuropathogenesis, yet little is known about the molecular mechanisms that govern 
+      the susceptibility of human brain cells to the virus. In this study, we sought to 
+      establish and characterize a new in vitro model of TBEV infection in the human 
+      brain and to decipher cell type-specific innate immunity and its relation to TBEV 
+      tropism and neuropathogenesis. METHOD: Human neuronal/glial cells were 
+      differentiated from neural progenitor cells and infected with the TBEV-Hypr 
+      strain. Kinetics of infection, cellular tropism, and cellular responses, 
+      including innate immune responses, were characterized by measuring viral genome 
+      and viral titer, performing immunofluorescence, enumerating the different 
+      cellular types, and determining their rate of infection and by performing PCR 
+      array and qRT-PCR. The specific response of neurons and astrocytes was analyzed 
+      using the same approaches after enrichment of the neuronal/glial cultures for 
+      each cellular subtype. RESULTS: We showed that infection of human neuronal/glial 
+      cells mimicked three major hallmarks of TBEV infection in the human brain, 
+      namely, preferential neuronal tropism, neuronal death, and astrogliosis. We 
+      further showed that these cells conserved their capacity to mount an antiviral 
+      response against TBEV. TBEV-infected neuronal/glial cells, therefore, represented 
+      a highly relevant pathological model. By enriching the cultures for either 
+      neurons or astrocytes, we further demonstrated qualitative and quantitative 
+      differential innate immune responses in the two cell types that correlated with 
+      their particular susceptibility to TBEV. CONCLUSION: Our results thus reveal that 
+      cell type-specific innate immunity is likely to contribute to shaping TBEV 
+      tropism for human brain cells. They describe a new in vitro model for in-depth 
+      study of TBEV-induced neuropathogenesis and improve our understanding of the 
+      mechanisms by which neurotropic viruses target and damage human brain cells.
+FAU - Fares, Mazigh
+AU  - Fares M
+AD  - UMR1161 Virologie, Anses, INRAE, Ecole Nationale Vétérinaire d'Alfort, Université 
+      Paris-Est, Maisons-Alfort, France.
+AD  - MRC-University of Glasgow Centre for Virus Research, Glasgow, Scotland, UK.
+FAU - Cochet-Bernoin, Marielle
+AU  - Cochet-Bernoin M
+AD  - UMR1161 Virologie, Anses, INRAE, Ecole Nationale Vétérinaire d'Alfort, Université 
+      Paris-Est, Maisons-Alfort, France.
+FAU - Gonzalez, Gaëlle
+AU  - Gonzalez G
+AD  - UMR1161 Virologie, Anses, INRAE, Ecole Nationale Vétérinaire d'Alfort, Université 
+      Paris-Est, Maisons-Alfort, France.
+FAU - Montero-Menei, Claudia N
+AU  - Montero-Menei CN
+AD  - CRCINA, UMR 1232, INSERM, Université de Nantes, Université d'Angers, F-49933, 
+      Angers, France.
+FAU - Blanchet, Odile
+AU  - Blanchet O
+AD  - Centre de Ressources Biologiques, CHU Angers, BB-0033-00038, Angers, France.
+FAU - Benchoua, Alexandra
+AU  - Benchoua A
+AD  - CECS, I-STEM, AFM, Evry, France.
+FAU - Boissart, Claire
+AU  - Boissart C
+AD  - CECS, I-STEM, AFM, Evry, France.
+FAU - Lecollinet, Sylvie
+AU  - Lecollinet S
+AD  - UMR1161 Virologie, Anses, INRAE, Ecole Nationale Vétérinaire d'Alfort, Université 
+      Paris-Est, Maisons-Alfort, France.
+FAU - Richardson, Jennifer
+AU  - Richardson J
+AD  - UMR1161 Virologie, Anses, INRAE, Ecole Nationale Vétérinaire d'Alfort, Université 
+      Paris-Est, Maisons-Alfort, France.
+FAU - Haddad, Nadia
+AU  - Haddad N
+AD  - UMR BIPAR 956, Anses, INRAE, Ecole Nationale Vétérinaire d'Alfort, Université 
+      Paris-Est, Maisons-Alfort, France.
+FAU - Coulpier, Muriel
+AU  - Coulpier M
+AUID- ORCID: 0000-0001-5400-8727
+AD  - UMR1161 Virologie, Anses, INRAE, Ecole Nationale Vétérinaire d'Alfort, Université 
+      Paris-Est, Maisons-Alfort, France. muriel.coulpier@vet-alfort.fr.
+LA  - eng
+GR  - not applicable/French National Institute for Agriculture, Food and the 
+      Environment (INRAE)/
+GR  - Not Applicable/DIM Maladies Infectieuses/
+GR  - not applicable/Paris Institute of technology for life, food, and environmental 
+      sciences (AgroParisTech)/
+GR  - Not applicable/French National Institute for Agriculture, Food and the 
+      Environment (INRAE)/
+GR  - ANR-10-LABX-62-IBEID/Laboratoire d'Excellence Integrative Biology of Emerging 
+      Infectious Diseases/
+PT  - Journal Article
+DEP - 20200303
+PL  - England
+TA  - J Neuroinflammation
+JT  - Journal of neuroinflammation
+JID - 101222974
+SB  - IM
+MH  - Astrocytes/*immunology/*virology
+MH  - Cell Culture Techniques/methods
+MH  - Cells, Cultured
+MH  - Disease Susceptibility
+MH  - Encephalitis Viruses, Tick-Borne/physiology
+MH  - Encephalitis, Tick-Borne/*immunology/*virology
+MH  - Humans
+MH  - Immunity, Innate
+MH  - Neurons/*immunology/*virology
+MH  - Viral Tropism
+PMC - PMC7053149
+OTO - NOTNLM
+OT  - Central nervous system
+OT  - Flavivirus
+OT  - Human neuronal/glial cells
+OT  - Innate immunity
+OT  - Neuropathogenesis
+OT  - Neurotropic virus
+OT  - Pathological modeling
+OT  - Tick-borne encephalitis virus
+OT  - Viral tropism
+COIS- The authors declare that they have no competing interests.
+EDAT- 2020/03/05 06:00
+MHDA- 2020/12/15 06:00
+CRDT- 2020/03/05 06:00
+PHST- 2019/11/12 00:00 [received]
+PHST- 2020/02/21 00:00 [accepted]
+PHST- 2020/03/05 06:00 [entrez]
+PHST- 2020/03/05 06:00 [pubmed]
+PHST- 2020/12/15 06:00 [medline]
+AID - 10.1186/s12974-020-01756-x [pii]
+AID - 1756 [pii]
+AID - 10.1186/s12974-020-01756-x [doi]
+PST - epublish
+SO  - J Neuroinflammation. 2020 Mar 3;17(1):76. doi: 10.1186/s12974-020-01756-x.
+
+PMID- 32527288
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20210211
+LR  - 20210211
+IS  - 1756-3305 (Electronic)
+IS  - 1756-3305 (Linking)
+VI  - 13
+IP  - 1
+DP  - 2020 Jun 11
+TI  - Tick-borne encephalitis virus (TBEV) prevalence in field-collected ticks (Ixodes 
+      ricinus) and phylogenetic, structural and virulence analysis in a TBE high-risk 
+      endemic area in southwestern Germany.
+PG  - 303
+LID - 10.1186/s13071-020-04146-7 [doi]
+LID - 303
+AB  - BACKGROUND: Tick-borne encephalitis (TBE) is the most common viral CNS infection 
+      with incidences much higher than all other virus infections together in many risk 
+      areas of central and eastern Europe. The Odenwald Hill region (OWH) in 
+      southwestern Germany is classified as a TBE risk region and frequent case numbers 
+      but also more severe infections have been reported within the past decade. The 
+      objective of the present study was to survey the prevalence of tick-borne 
+      encephalitis virus (TBEV) in Ixodes ricinus and to associate TBEV genetic 
+      findings with TBE infections in the OWH. METHODS: Ticks were collected by the 
+      flagging methods supported by a crowdsourcing project implementing the interested 
+      public as collectors to cover completely and collect randomly a 3532 km(2) area 
+      of the OWH TBE risk region. Prevalence of TBEV in I. ricinus was analysed by 
+      reversed transcription quantitative real-time PCR. Phylogeographic analysis was 
+      performed to classify OWH TBEV isolates within a European network of known TBEV 
+      strains. Mutational sequence analysis including 3D modelling of envelope protein 
+      pE was performed and based on a clinical database, a spatial association of TBE 
+      case frequency and severity was undertaken. RESULTS: Using the crowd sourcing 
+      approach we could analyse a total of 17,893 ticks. The prevalence of TBEV in I. 
+      ricinus in the OWH varied, depending on analysed districts from 0.12% to 0% (mean 
+      0.04%). Calculated minimum infection rate (MIR) was one decimal power higher. All 
+      TBEV isolates belonged to the European subtype. Sequence analysis revealed a 
+      discontinuous segregation pattern of OWH isolates with two putative different 
+      lineages and a spatial association of two isolates with increased TBE case 
+      numbers as well as exceptional severe to fatal infection courses. CONCLUSIONS: 
+      TBEV prevalence within the OWH risk regions is comparatively low which is 
+      probably due to our methodological approach and may more likely reflect 
+      prevalence of natural TBEV foci. As for other European regions, TBEV genetics 
+      show a discontinuous phylogeny indicating among others an association with bird 
+      migration. Mutations within the pE gene are associated with more frequent, severe 
+      and fatal TBE infections in the OWH risk region.
+FAU - Ott, Daniela
+AU  - Ott D
+AD  - Neuroinfectious Diseases Group, Department of Neurology, University Hospital 
+      Heidelberg, University of Heidelberg, Im Neuenheimer Feld 350, 69120, Heidelberg, 
+      Germany.
+FAU - Ulrich, Kristina
+AU  - Ulrich K
+AD  - Institute of Aquaculture, University of Stirling, Stirling, FK9 4LA, Scotland, 
+      UK.
+FAU - Ginsbach, Philip
+AU  - Ginsbach P
+AD  - Mathematics, University of Oxford, Oxford, OX1 2JD, UK.
+FAU - Öhme, Rainer
+AU  - Öhme R
+AD  - Molecular Biology Laboratory, Landesgesundheitsamt Stuttgart, Nordbahnhofstraße 
+      135, 70191, Stuttgart, Germany.
+FAU - Bock-Hensley, Oswinde
+AU  - Bock-Hensley O
+AD  - Gesundheitsamt Rhein-Neckarkreis, Kurfürsten-Anlage 38-40, 69115, Heidelberg, 
+      Germany.
+FAU - Falk, Ulrich
+AU  - Falk U
+AD  - Gesundheitsamt Odenwaldkreis, Michelstädter Str. 12, 64711, Erbach, Germany.
+FAU - Teinert, Martina
+AU  - Teinert M
+AD  - Gesundheitsamt Neckar-Odenwaldkreis, Neckarelzer Str. 7, 74821, Mosbach, Germany.
+FAU - Lenhard, Thorsten
+AU  - Lenhard T
+AUID- ORCID: 0000-0002-5875-7802
+AD  - Neuroinfectious Diseases Group, Department of Neurology, University Hospital 
+      Heidelberg, University of Heidelberg, Im Neuenheimer Feld 350, 69120, Heidelberg, 
+      Germany. thorsten.lenhard@med.uni-heidelberg.de.
+LA  - eng
+PT  - Journal Article
+DEP - 20200611
+PL  - England
+TA  - Parasit Vectors
+JT  - Parasites & vectors
+JID - 101462774
+RN  - 0 (RNA, Viral)
+RN  - 0 (Viral Envelope Proteins)
+SB  - IM
+MH  - Animals
+MH  - Encephalitis Viruses, Tick-Borne/classification/*genetics/*pathogenicity
+MH  - Encephalitis, Tick-Borne/*epidemiology
+MH  - Endemic Diseases
+MH  - Female
+MH  - Germany/epidemiology
+MH  - Incidence
+MH  - Ixodes/*virology
+MH  - Male
+MH  - Mutation
+MH  - Phylogeny
+MH  - Phylogeography
+MH  - Prevalence
+MH  - RNA, Viral/genetics
+MH  - *Viral Envelope Proteins/chemistry
+MH  - Virulence
+PMC - PMC7291635
+OTO - NOTNLM
+OT  - Envelope protein
+OT  - Flavivirus
+OT  - Germany
+OT  - Ixodes ricinus
+OT  - Phylogeny
+OT  - Risk-area
+OT  - TBEV prevalence
+OT  - Tick-borne encephalitis
+COIS- TL received funding for travel to the annual ISW TBE meeting (international 
+      scientific-working group on tick-borne encephalitis, Vienna, Austria) from Baxter 
+      Deutschland GmbH, Unterschleißheim, Germany, and Pfizer Deutschland GmbH, Berlin, 
+      Germany. KU, PG, RO, OBH, UF and MT declare that they have no competing 
+      interests.
+EDAT- 2020/06/13 06:00
+MHDA- 2021/02/12 06:00
+CRDT- 2020/06/13 06:00
+PHST- 2019/12/11 00:00 [received]
+PHST- 2020/05/23 00:00 [accepted]
+PHST- 2020/06/13 06:00 [entrez]
+PHST- 2020/06/13 06:00 [pubmed]
+PHST- 2021/02/12 06:00 [medline]
+AID - 10.1186/s13071-020-04146-7 [pii]
+AID - 4146 [pii]
+AID - 10.1186/s13071-020-04146-7 [doi]
+PST - epublish
+SO  - Parasit Vectors. 2020 Jun 11;13(1):303. doi: 10.1186/s13071-020-04146-7.

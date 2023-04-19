@@ -29,9 +29,9 @@ LDLIBS=#-liconv
 # My gcc command (except for libraries)
 gccArgs=\
     cStrFun.c\
-    cnvtPubmedToBib.c\
-    pubmedToBib.c\
-    -o pubmedToBib
+    cnvtNbibToBib.c\
+    nbibToBib.c\
+    -o nbibToBib
 
 all: getLibiconvStatic getUnac
 	# the first install works for debain, while the 
@@ -65,14 +65,12 @@ clean:
 
 # Get a static build of libiconv
 getLibiconvStatic:
-	printf "Downloading iconv for unac\n"
 	# Check if libiconv already exits, if not download
 	ls libiconv-1.9.1.tar.gz ||\
       curl\
         --output libiconv-1.9.1.tar.gz\
    ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz
 	tar -xzf libiconv-1.9.1.tar.gz
-	printf "Configuring libiconv\n"
 	ls lib || (cd libiconv-1.9.1 &&\
       ./configure\
         CC=$(CC)\
@@ -89,11 +87,9 @@ getLibiconvStatic:
 		# no longer need
 
 getUnac:
-	printf "Downloading unac\n"
 	ls unac.c ||\
       ls unac ||\
       git clone https://github.com/QuickDict/unac
-	printf "Copying needed files from unac\n"
 	ls unac.c || cp unac/unac.c ./
 	ls unac.h || cp unac/unac.h ./
 	rm -r -f unac

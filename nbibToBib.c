@@ -4,17 +4,26 @@
 #  - Holds structures and functions to downloads a pdf from
 #    pubmed central (PMC) using curl
 # Dependencies:
-#  - "getPMCPdf.h"
-#  o "cnvtPubmedToBib.h"
+#  x "getPMCPdf.h" (Only if -DPDF is used)
+#     - NCBI blocks curl, so does not work. The code was
+#       left here for future reference on how to use curl.
+#       (for my self).
+#  o "cnvtNbibToBib.h"
+#  o "nbibToBibSettings.h"
 #  o "cStrFun.h"
 #  o <stdlib.h>
 #  o <string.h>
 #  o <stdio.h>
-#  o <unac.h>
-#  o <curl/curl.h>
+#  o "unac.h"      (Only if -DNORMACCENT is not used)
+#    o libiconv-1.9.1
+#  x <curl/curl.h> (Only if -DPDF is used)
 # Note to self:
 #   http://graphics.stanford.edu/~seander/bithacks.html
 #   Has log2 by bit shift and other optiontions
+# General note:
+#  I found out later that what I thought was a .pubmed
+#  format was acutally a .nbib format. This means my
+#  structure names are off (pubmed/pub instead of nbib).
 #########################################################*/
 
 // Allow user to turn off
@@ -22,7 +31,7 @@
     #include "getPMCPdf.h"
 #endif
 
-#include "cnvtPubmedToBib.h"
+#include "cnvtNbibToBib.h"
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
 ' SOP: Start Of Program
@@ -172,11 +181,11 @@ int main(
    \******************************************************/
 
    char *helpCStr = "\
-   \n Use: Converts a .pubmed file to a bibtex (.bib) file\
-   \n Run: pubmedToBib -pubmed file.pubmed [options...]\
+   \n Use: Converts a .nbib file to a bibtex (.bib) file\
+   \n Run: pubmedToBib -nbib file.nbib [options...]\
    \n Input:\
-   \n   -pubmed file.pubmed: [Required]\
-   \n     o .pubmed file to convert to bibtex (.bib) file.\
+   \n   -nbib file.pubmed: [Required]\
+   \n     o .nbib file to convert to bibtex (.bib) file.\
    \n     o Make sure each citation (entry) in the file is\
    \n       separated by a blank line.\
    \n   -bib file.bib: [stdout]\
@@ -374,7 +383,7 @@ int main(
 
    if(pubFileCStr == 0)
    { // If the user id not input a fil to process
-       fprintf(stderr, "No file input with -pubmed\n");
+       fprintf(stderr, "No file input with -nbib\n");
        exit(-1);
    } // If the user id not input a fil to process
 
@@ -384,7 +393,7 @@ int main(
    { // If I could not open the input file
        fprintf(
            stderr,
-           "Could not open -pubmed file (%s)\n",
+           "Could not open -nbib file (%s)\n",
            pubFileCStr
        ); // Let user know about the failure
 
@@ -520,7 +529,7 @@ int main(
    { // If had an invalid pubmed file
        fprintf(
            stderr,
-           "-pubmed %s is an invalid file\n",
+           "-nbib %s is an invalid file\n",
            pubFileCStr
        );
 
@@ -599,7 +608,7 @@ char * getUserInput(
        parameterCStr = *(argsIn + iArg);
        inputCStr = *(argsIn + iArg + 1);
 
-       if(strcmp(parameterCStr, "-pubmed") == 0)
+       if(strcmp(parameterCStr, "-nbib") == 0)
        { // If the user input a pubmed file
             *pubFileCStr = inputCStr;
             ++iArg;

@@ -1,12 +1,41 @@
 # Use:
 
-pubmedToBib converts a pubmed reference file to a bibtex
-  file.
+nbibToBib converts an nbib reference file to a bibtex file.
 
-I made this code to satisfy my need, but am posting it here
-  in case someone else finds it useful (there are plenty of
-  alternatives out there, but I am picky about my bibtex
-  format).
+## Alternatives:
+
+ - bibutils [https://github.com/biodranik/bibutils](https://github.com/biodranik/bibutils)
+   - At a glance, this looks like rather robust code, but
+     it does not have the same level of flexiability for
+     deciding which entries to print out. However, it does
+     have a bit more flexibility in controlling if you
+     prefere braces or "" and does have some white space
+     settings.
+   - One upside is that this code was designed to be a
+     general conversion tool, so it supports more than just
+     bibtex conversion. The downside ofto this is that the
+     user needs to run two programs. One to convert the
+     nbib to xml and another to conver the xml to a bibtex
+     file. Best to make a bash script for this.
+ - nbib2bib [https://github.com/thiagonds65/nbib2bib](https://github.com/thiagonds65/nbib2bib)
+   - This is a python script which converts all nbib files
+     in a directory to bibtex files. It does come with
+     10 preloaded files.
+   - This works, but has no flexibility for choosing the
+     output format.
+   - It uses the doi entry to get the bibtex file, which
+     allows it to get the month entry that both nbibToBib
+     and bibutils miss for PMID 22078026. However, this
+     also causes it to run slowly, 6 seconds for all eight 
+     of its test cases. In comparision both nbibToBib and
+     bibutils takes less than a second for all eight test
+     cases.
+   - Finally their are plenty of PMID to bibtex programs
+     out their which can get the job done. 
+     - For example [https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1b](https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1ba) took 1 second to output the bibtex
+       entries for nbib2bib's eight test cases.
+   
+## Description:
 
 Entries extracted from the pubmed file are:
   author names (full only), title, journal name, year,
@@ -33,17 +62,178 @@ I should note that this extracts the date of publication
   times were the DP entry will have less information than
   the DEP entry.
 
-The .pubmed file can have multiple articles, so long as
+The .nbib file can have multiple articles, so long as
   each articles entry is separated by a blank line. See
-  test/test-case.pubmed for an example.
+  test/test-case.nbib for an example.
 
-PubMed files can be downloaded from a pubmed search by
-  clicking save (under search box)-> format -> 
-  selecting the PubMed format -> create file.
+Nbib files can be downloaded from a pubmed search by
+  save (under search box)->format->selecting the PubMed
+  format->create file. The file will be saved as a .txt
+  file, but is an .nbib file.
+
+```
+I suspect most people using this code will not need this
+  diagram, but I included it just in case someone might
+  find it useful.
+
+Visual of downloading a .nbiv file from pubmed.
+
+-----------------------------------------------------------
+                    Step 1: Select save
+-----------------------------------------------------------
+
+    +-----\\
+    | NIH  ++ National Library of Medicine
+    +-----//  National Center for Biotechnology information
+    
+           +-------------------------------+
+    PubMed | Search term                   |
+           +-------------------------------+
+           Advanced  Create alert  Creat RSS
+    
+           +------+
+**CLICK**->| Save |
+           +------+
+    
+-----------------------------------------------------------
+                    Step 2: Select PubMed (nbib) output
+-----------------------------------------------------------
+
+    +-----\\
+    | NIH  ++ National Library of Medicine
+    +-----//  National Center for Biotechnology information
+    
+           +-------------------------------+
+    PubMed | Search term                   |
+           +-------------------------------+
+           Advanced  Create alert  Creat RSS
+    
+           +------+
+           | Save |
+           +------+
+    
+           Save citations to file
+    
+                     +--------------------------+
+           Seletion: | All results on this page |
+                     +--------------------------+
+    
+                     +-----------------+
+           Format:   | Summary (text)  |
+**SELECT**---------->| PubMed          |
+                     | PMID            |
+                     | Abstract (text) |
+                     | CSV             |
+                     +-----------------+
+    
+           +-------------+
+           | Create file |
+           +-------------+
+
+-----------------------------------------------------------
+                    Step 3: Select create file
+-----------------------------------------------------------
+
+    +-----\\
+    | NIH  ++ National Library of Medicine
+    +-----//  National Center for Biotechnology information
+    
+           +-------------------------------+
+    PubMed | Search term                   |
+           +-------------------------------+
+           Advanced  Create alert  Creat RSS
+    
+           +------+
+           | Save |
+           +------+
+    
+           Save citations to file
+    
+                     +--------------------------+
+           Seletion: | All results on this page |
+                     +--------------------------+
+    
+                     +-----------------+
+           Format:   | PubMed          |
+                     +-----------------+
+    
+           +-------------+
+**CLICK**->| Create file |
+           +-------------+
+```
+
+## Building:
+
+NbibToBib depends on unac to remove accents from the
+  first authors last name when building the citation key
+  for the bibtex file. This feature can be removed by
+  running make normaccent. However, this means that the
+  citation key will only use the year and pubmed id.
+
+The make file will download both unac and libiconv-1.9.1,
+  which unac depends on with curl and git. The unac_version
+  function is removed from the unac.c/h files (prevents 
+  errors). libiconv and unac are then used to build a
+  static build of nbibToBib.
+
+You can change the gcc complier used to build nbibToBi
+  with make CC=newGCC. The default is cc.
+
+Dependencies:
+
+- unac (Downloaded during installation)
+  - [https://github.com/QuickDict/unac](https://github.com/QuickDict/unac)
+  - Removed with make normaccent
+- libconiv-1.9.1 (Download during installion)
+  - [ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz](ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz)
+  - Removed with make normaccent
+- unix cmd programs used in build (removed by
+  make normaccent)
+  - curl: Used to download libiconv-1.9.1
+  - git: Used to download unac
+  - sed: Removes unac_version function from unac.c/h
+  - tar: Extract libiconv files
+- Modern gcc compiler
+
+```
+# Linux Install
+
+make
+make clean        # remove the libiconv install files
+cp nbibToBib /path/to/install
+chmod a+x /path/to/install/nbibToBib
+```
+
+```
+# Openbsd Install
+
+make CC=egcc  # cc is a bit to old for libiconv & unac
+make clean
+cp nbibToBib /path/to/install
+chmod a+x /path/to/install/nbibToBib
+```
+
+```
+# Linux or openbsd no dependency install
+
+make normaccent # for a no dependecy build
+cp nbibToBib /path/to/install
+chmod a+x /path/to/install/nbibToBib
+```
 
 ## Running:
 
-The help message for pubmedToBib can be printed with 
+```
+nbibToBib -nbib file.nbib > file.bib
+
+# Show the help message
+nbibToBib -h | less
+
+# Show the message to change entries printed to bibtex
+nbibToBib -bib-help | less
+```
+
+The help message for nbibToBib can be printed with 
   -h. A further help message showing the fine tuning
   options, which control what is printed out can be called
   with -bib-help.
@@ -57,12 +247,12 @@ Each of the parameters printed by -bib-help have two forms.
   entries are always printed out.
 
 These values can also be changed at compile time be editing
-  pubmedToBib-settings.h. To enable an option change
+  nbibToBib-settings.h. To enable an option change
   defPXBl, were x is the entry to enable to 1. To disable
   an option change defPXBl, were x is the entry to disable
   to 0 (these entries are on lines 14 to 43). This will
   mess up the help message a bit, but works. The -bib-help
-  message is printed out by Fun-06 in pubmedToBib.c
+  message is printed out by Fun-06 in nbibToBib.c
   (this is at the bottom of the document).
 
 The output line wrapping of the bibtex file can be set with
@@ -83,67 +273,3 @@ You have two options for how lines end. The unix option
 
 The input file is specified by -pubmed and the output file
   is specified by -bib.
-
-```
-pubmedToBib -pubmed file.pubmed > file.bib
-
-# Show the help message
-pubmedToBib -h | less
-
-# Show the message to change entries printed to bibtex
-pubmedToBib -bib-help | less
-```
-
-## Building:
-
-PubmedToBib depends on unac to remove accents from the
-  first authors last name when building the citation key
-  for the bibtex file. This feature can be removed by
-  running make normaccent. However, this means that the
-  citation key will only use the year and pubmed id.
-
-During the build both unac and libiconv-1.9.1, which unac
-  depends on are downloaded using curl and git. 
-  Problematic lines (version number function) in the
-  unac.c/h files are removed with sed. The unac.c/h files
-  and libraries form libiconv are then used to build a
-  static install of pubmedToBib.
-
-You can change the gcc complied used with make by using
-  make CC=newGCC.
-
-Dependencies:
-
-- unac (Downloaded during installation)
-  - [https://github.com/QuickDict/unac](https://github.com/QuickDict/unac)
-  - Removed with make normaccent
-- libconiv-1.9.1 (Download during installion)
-  - [ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz](ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz)
-  - Removed with make normaccent
-- Curl: Used to download libiconv-1.9.1
-  - Removed with make normaccent
-- Git: Used to download unac
-  - Removed with make normaccent
-- Sed: To remove the version number function from unac.c/h
-  - Removed with make normaccent
-- Modern gcc compiler
-
-```
-# Linux
-
-make
-# make normaccent # for a no dependecy build
-make clean        # remove the libiconv install files
-cp pubmedToBib /path/to/install
-chmod a+x /path/to/install/pubmedToBib
-```
-
-```
-# openbsd
-
-make CC=egcc  # cc is a bit to old for libiconv & unac
-# make normaccent # for a no dependecy build
-make clean
-cp pubmedToBib /path/to/install
-chmod a+x /path/to/install/pubmedToBib
-```

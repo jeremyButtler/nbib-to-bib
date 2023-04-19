@@ -65,7 +65,7 @@ The .nbib file can have multiple articles, so long as
   each articles entry is separated by a blank line. See
   test/test-case.nbib for an example. You can merge
   individual nbib files into a single nbib file with new
-  lines using sed.
+  lines at the end of each reference using sed.
 
   ```
   sed '${a\

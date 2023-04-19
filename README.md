@@ -19,8 +19,7 @@ nbibToBib converts an nbib reference file to a bibtex file.
      file. Best to make a bash script for this.
  - nbib2bib [https://github.com/thiagonds65/nbib2bib](https://github.com/thiagonds65/nbib2bib)
    - This is a python script which converts all nbib files
-     in a directory to bibtex files. It does come with
-     10 preloaded files.
+     in a directory to bibtex files.
    - This works, but has no flexibility for choosing the
      output format.
    - It uses the doi entry to get the bibtex file, which
@@ -30,10 +29,10 @@ nbibToBib converts an nbib reference file to a bibtex file.
      of its test cases. In comparision both nbibToBib and
      bibutils takes less than a second for all eight test
      cases.
-   - Finally their are plenty of PMID to bibtex programs
-     out their which can get the job done. 
-     - For example [https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1b](https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1ba) took 1 second to output the bibtex
-       entries for nbib2bib's eight test cases.
+ - Finally their are plenty of PMID to bibtex programs
+   out their which can get the job done. 
+   - For example [https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1b](https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1ba) took 1 second to output the bibtex
+       entries for all of nbib2bib's test cases.
    
 ## Description:
 
@@ -64,7 +63,16 @@ I should note that this extracts the date of publication
 
 The .nbib file can have multiple articles, so long as
   each articles entry is separated by a blank line. See
-  test/test-case.nbib for an example.
+  test/test-case.nbib for an example. You can merge
+  individual nbib files into a single nbib file with new
+  lines using sed.
+
+  ```
+  sed '${a\
+     
+  };' *.nbib > merged.nbib;
+  ```
+
 
 Nbib files can be downloaded from a pubmed search by
   save (under search box)->format->selecting the PubMed

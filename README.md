@@ -31,7 +31,7 @@ nbibToBib converts an nbib reference file to a bibtex file.
      cases.
  - Finally their are plenty of PMID to bibtex programs
    that can convert a pmid to a bibtex entry for you.
-   - For example [https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1b](https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1ba) took 1 second to output the bibtex
+   - For example [https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1b](https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1b) took 1 second to output the bibtex
        entries for all of nbib2bib's test cases.
    
 ## Description:

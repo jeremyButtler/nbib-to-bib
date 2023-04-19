@@ -68,7 +68,7 @@ The .nbib file can have multiple articles, so long as
   lines at the end of each reference using sed.
 
 ```
-sed '${a\
+sed '/SO/{a\
 
 };' *.nbib > merged.nbib;
 ```

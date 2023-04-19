@@ -30,7 +30,7 @@ nbibToBib converts an nbib reference file to a bibtex file.
      bibutils takes less than a second for all eight test
      cases.
  - Finally their are plenty of PMID to bibtex programs
-   out their which can get the job done. 
+   that can convert a pmid to a bibtex entry for you.
    - For example [https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1b](https://gist.github.com/tommycarstensen/ec3c57761f3846c339de925b66f4ac1ba) took 1 second to output the bibtex
        entries for all of nbib2bib's test cases.
    

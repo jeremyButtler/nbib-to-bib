@@ -67,11 +67,11 @@ The .nbib file can have multiple articles, so long as
   individual nbib files into a single nbib file with new
   lines at the end of each reference using sed.
 
-  ```
-  sed '${a\
-     
-  };' *.nbib > merged.nbib;
-  ```
+```
+sed '${a\
+
+};' *.nbib > merged.nbib;
+```
 
 
 Nbib files can be downloaded from a pubmed search by

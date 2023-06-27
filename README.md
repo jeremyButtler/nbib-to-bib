@@ -286,7 +286,7 @@ The input file is specified by -pubmed and the output file
 
 ## Updates
 
-### June 23rd 2023 (20230623)
+### June 23rd 2023 (version 20230623)
 
 - Fixed an error were a comma was not put after the
   citation key

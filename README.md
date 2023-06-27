@@ -2,6 +2,8 @@
 
 nbibToBib converts an nbib reference file to a bibtex file.
 
+Note updates I have made are at the bottom of this readme
+
 ## Alternatives:
 
  - bibutils [https://github.com/biodranik/bibutils](https://github.com/biodranik/bibutils)

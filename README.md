@@ -290,7 +290,7 @@ The input file is specified by -pubmed and the output file
 
 - Fixed an error were a comma was not put after the
   citation key
-  - This error can be corrected with
+  - This error can be corrected in older versions with
     ```
     sed 's/^\(@.*={.*\)/\1,/' file.bib > tmp.bib;
     mv tmp.bib file.bib;

@@ -228,7 +228,7 @@ void pubmedSTToBib(
    if(pubOutST->citeKeyBl & 1)
      fprintf(
        bibFILE,
-       "@%s={%s",
+       "@%s={%s,",
        pubST->bibTypeCStr,
        pubST->citeKeyCStr
      );
@@ -236,7 +236,7 @@ void pubmedSTToBib(
    else
      fprintf(
        bibFILE,
-       "@%s={",
+       "@%s={,",
        pubST->bibTypeCStr
      );
 

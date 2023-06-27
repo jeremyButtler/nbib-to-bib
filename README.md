@@ -281,3 +281,15 @@ You have two options for how lines end. The unix option
 
 The input file is specified by -pubmed and the output file
   is specified by -bib.
+
+## Updates
+
+### June 23rd 2023 (20230623)
+
+- Fixed an error were a comma was not put after the
+  citation key
+  - This error can be corrected with
+    ```
+    sed 's/^\(@.*={.*\)/\1,/' file.bib > tmp.bib;
+    mv tmp.bib file.bib;
+    ```

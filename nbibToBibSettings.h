@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define defVersion 20230417 // Started 20230412
+#define defVersion 20230623 // Started 20230412
 #define defGetPdf 0   // Download pdf if found a PMC id
                       // Pubmed blocks curl; does not work
 #define defLineWrap 59 // Default line wrapping limit

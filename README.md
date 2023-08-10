@@ -206,29 +206,25 @@ Dependencies:
 - Modern gcc compiler
 
 ```
-# Linux Install
+# Building on Linux
+make;
 
-make
-make clean        # remove the libiconv install files
-cp nbibToBib /path/to/install
-chmod a+x /path/to/install/nbibToBib
-```
+# Building on OpenBsd
+make CC=egcc; # Changing the default compiler
 
-```
-# Openbsd Install
-
-make CC=egcc  # cc is a bit to old for libiconv & unac
-make clean
-cp nbibToBib /path/to/install
-chmod a+x /path/to/install/nbibToBib
-```
-
-```
-# Linux or openbsd no dependency install
-
+# Linux or openbsd no unac support
 make normaccent # for a no dependecy build
-cp nbibToBib /path/to/install
-chmod a+x /path/to/install/nbibToBib
+
+#install
+make install cleanall
+  # - cleanall removes libiconv/unac files
+  # - make clean just removes the extracted libiconv files
+  #   but still keeps the tar.gz file. This is nice if you
+  #   plan to compile this program multiple times, since
+  #   you will not have to redownload libiconv and unac.
+
+# install to an alternate location
+make PREFIX=/alternate/location/ install clean
 ```
 
 ## Running:
@@ -285,6 +281,29 @@ The input file is specified by -pubmed and the output file
   is specified by -bib.
 
 ## Updates
+
+### August 10th 2023 (version 20230810)
+
+- Fixed an error were the bibtex entry type was printed as
+  "@Type={key," instead of "@Type{key,". This error can
+  be fixed with
+  ```
+  sed 's/\(^@.*\)={/\1{/' file.bib > tmp.bib;
+  mv tmp.bib file.bib;
+  ```
+- Added in support for getting the ppi entry "-p-ppi". This
+  is off by default.
+- Added in support for detecting doi's in the AID entry. I
+  found out the LID entry is not always present when a doi
+  is present.
+- Made the help message check the default values before
+  printing. This means the help message will reflect the
+  changes you made to the default values in
+  nbibToBibSettings.h
+  - Also added in a default line break setting option to
+    nbibToBibSettings (defBreakType). So, you can choose
+    now if you linux ("\n" set to 0) or windows ("\r\n" set
+    to 1) as the default. Any other value goes to linux.
 
 ### June 23rd 2023 (version 20230623)
 

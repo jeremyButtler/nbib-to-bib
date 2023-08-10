@@ -185,6 +185,11 @@ typedef struct pubmedStruct
     unsigned long lenArticleTypeStrUL;
     unsigned short lenArticleTypeLineOnUS;
 
+    // Holds any notes about the ariticle (only for
+    // pre-prints currently)
+    char noteStr[128];
+    unsigned char lenNoteUC;
+
     // Holds the journal abrevation (TA)
     char abrevJournalCStr[128];
     unsigned char lenAbrevJournalStrUC;
@@ -198,9 +203,13 @@ typedef struct pubmedStruct
     char langCStr[32];
     unsigned char lenLangStrUC;
 
-    // Holds the doi (LID)
+    // Holds the doi (LID/AID)
     char doiCStr[64];
     unsigned char lenDoiStrUC;
+
+    // Holds the ppi (LID/AID)
+    char ppiCStr[64];
+    unsigned char lenPPIStrUC;
 
     // Holds the electronic page number (LID)
     char electronicPageCStr[32];
@@ -238,6 +247,7 @@ typedef struct pubOut
   char volBl;      // Print out the volume number
   char issueBl;    // Print out the issue number
   char doiBl;      // Print out the doi number
+  char ppiBl;      // Print out the ppi
   char pgBl;       // Print out the page number
 
   char editionBl;  // Print out the edition

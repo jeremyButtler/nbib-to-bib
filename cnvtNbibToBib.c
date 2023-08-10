@@ -167,26 +167,26 @@ void pubmedSTToBib(
 ){ /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
    ' Fun-02 TOC: pubmedSTToBib
    '  - Outputs data in pubST to a bibtex file
-   '  o fun-05 sec-01: Output format
-   '  o fun-05 sec-02: Print out bibtex entry type and key
-   '  o fun-05 sec-03: Print out the title
-   '  o fun-05 sec-04: Print out the author list
-   '  o fun-05 sec-05:jounral,year,month,volume,& issue
-   '  o fun-05 sec-06: Check if printing the edition
-   '  o fun-05 sec-07: Check which page count to print out
-   '  o fun-05 sec-08:
+   '  o fun-02 sec-01: Output format
+   '  o fun-02 sec-02: Print out bibtex entry type and key
+   '  o fun-02 sec-03: Print out the title
+   '  o fun-02 sec-04: Print out the author list
+   '  o fun-02 sec-05:jounral,year,month,volume,& issue
+   '  o fun-02 sec-06: Check if printing the edition
+   '  o fun-02 sec-07: Check which page count to print out
+   '  o fun-02 sec-08:
    '    - doi,url,ISSN,PMID,PMCID,language & article type
-   '  o fun-05 sec-09: Check if have a PMC id
-   '  o fun-05 sec-10: Check if have a isbn number
-   '  o fun-05 sec-11: Check if printing out the file name
-   '  o fun-05 sec-12: Print out the tags
-   '  o fun-05 sec-13: Check if printing wrapped key words
-   '  o Fun-05 sec-14: Check if printing wrapped mesh terms
-   '  o fun-05 sec-15: out, notes, abstract, and ending }
+   '  o fun-02 sec-09: Check if have a PMC id
+   '  o fun-02 sec-10: Check if have a isbn number
+   '  o fun-02 sec-11: Check if printing out the file name
+   '  o fun-02 sec-12: Print out the tags
+   '  o fun-02 sec-13: Check if printing wrapped key words
+   '  o fun-02 sec-14: Check if printing wrapped mesh terms
+   '  o fun-02 sec-15: out, notes, abstract, and ending }
    \~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-01 Sub-01: Output format
+   ^ Fun-02 Sec-01 Sub-01: Output format
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    /* Bibtex Format (... means text from variables)
@@ -222,13 +222,13 @@ void pubmedSTToBib(
    */
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-02 Sub-01: Print bibtex entry type and key
+   ^ Fun-02 Sec-02 Sub-01: Print bibtex entry type and key
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubOutST->citeKeyBl & 1)
      fprintf(
        bibFILE,
-       "@%s={%s,",
+       "@%s{%s,",
        pubST->bibTypeCStr,
        pubST->citeKeyCStr
      );
@@ -241,7 +241,7 @@ void pubmedSTToBib(
      );
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-03 Sub-01: Print out the title
+   ^ Fun-02 Sec-03 Sub-01: Print out the title
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubST->wrapUS != 0 &&
@@ -266,7 +266,7 @@ void pubmedSTToBib(
        );
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-04 Sub-01: Print out the author list
+   ^ Fun-02 Sec-04 Sub-01: Print out the author list
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubST->wrapUS != 0 &&
@@ -291,7 +291,7 @@ void pubmedSTToBib(
      );
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-05 Sub-01:jounral,year,month,volume,& issue
+   ^ Fun-02 Sec-05 Sub-01:jounral,year,month,volume,& issue
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubST->wrapUS != 0 &&
@@ -371,7 +371,7 @@ void pubmedSTToBib(
      ); // Printing out the issue number
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-06 Sub-01: Check if printing the edition
+   ^ Fun-02 Sec-06 Sub-01: Check if printing the edition
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubST->editionCStr[0] != '\0' &&
@@ -385,7 +385,7 @@ void pubmedSTToBib(
        );
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-07 Sub-01: which page count to print out
+   ^ Fun-02 Sec-07 Sub-01: which page count to print out
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubOutST->pgBl & 1)
@@ -409,10 +409,9 @@ void pubmedSTToBib(
    } // If I am printing out a page number
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-08 Sub-01:
+   ^ Fun-02 Sec-08 Sub-01:
    ^  - doi,url,ISSN,PMID,PMCID,language & article type
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-
 
    if(pubOutST->articleTypeBl & 1)
    { // If I am printing out the article type list
@@ -438,6 +437,32 @@ void pubmedSTToBib(
        );
    } // If I am printing out the article type list
 
+   /*Check if printing out note with a line wrap*/
+   if(pubST->noteStr[0] != '\0' &&
+      pubST->wrapUS != 0 &&
+      pubST->lenNoteUC + 10 > pubST->wrapUS
+   ){ /*If I am printing out the note for an ariticle*/
+     fprintf(
+        bibFILE,
+        "%s  Note={%s%s%s},",
+        pubST->lineBreakCStr,
+        pubST->lineBreakCStr,
+        pubST->noteStr,
+        pubST->lineBreakCStr
+     ); /*print out the note entry*/
+   } /*If I am printing out the note for an ariticle*/
+
+   /*Note with no linewrap*/
+   else if(pubST->noteStr[0] != '\0')
+   { /*else if I am printing out the note for an ariticle*/
+     fprintf(
+        bibFILE,
+        "%s  Note={%s},",
+        pubST->lineBreakCStr,
+        pubST->noteStr
+     ); /*print out the note entry*/
+   } /*If I am printing out the note for an ariticle*/
+
     if(pubOutST->doiBl & 1)
       fprintf(
         bibFILE,
@@ -452,6 +477,14 @@ void pubmedSTToBib(
         "%s  url={https://dx.doi.org/%s},",
         pubST->lineBreakCStr,
         pubST->doiCStr
+      );
+
+    if(pubOutST->ppiBl & 1)
+      fprintf(
+        bibFILE,
+        "%s  ppi={%s},",
+        pubST->lineBreakCStr,
+        pubST->ppiCStr
       );
 
    if(pubOutST->issnBl & 1)
@@ -480,7 +513,7 @@ void pubmedSTToBib(
       ); // If printing out the publication language
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-09 Sub-01: Check if have a PMC id
+   ^ Fun-02 Sec-09 Sub-01: Check if have a PMC id
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubST->pmcidCStr[0] != '\0' && pubOutST->pmcBl & 1)
@@ -492,7 +525,7 @@ void pubmedSTToBib(
      );
     
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-10 Sub-01: Check if have a isbn number
+   ^ Fun-02 Sec-10 Sub-01: Check if have a isbn number
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubST->isbnCStr[0] != '\0' && pubOutST->isbnBl & 1)
@@ -504,7 +537,7 @@ void pubmedSTToBib(
      );
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-11 Sub-01: printing out the file name?
+   ^ Fun-02 Sec-11 Sub-01: printing out the file name?
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubOutST->fileNameBl & 1)
@@ -523,7 +556,7 @@ void pubmedSTToBib(
       ); // Print out the supplement tag
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-12 Sub-01: Print out the tags
+   ^ Fun-02 Sec-12 Sub-01: Print out the tags
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubOutST->tagsBl & 1)
@@ -552,7 +585,7 @@ void pubmedSTToBib(
    } // If printing out the tags
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-13 Sub-01: printing wrapped key words?
+   ^ Fun-02 Sec-13 Sub-01: printing wrapped key words?
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubOutST->keyWordsBl & 1)
@@ -580,7 +613,7 @@ void pubmedSTToBib(
    } // If printing out the key words
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-14 Sub-01: printing wrapped mesh terms?
+   ^ Fun-02 Sec-14 Sub-01: printing wrapped mesh terms?
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubOutST->meshBl & 1)
@@ -608,8 +641,8 @@ void pubmedSTToBib(
        );
    } // If printing out the mesh terms
 
-     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-05 Sec-15 Sub-01: notes, abstract, and ending }
+   /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
+   ^ Fun-02 Sec-15 Sub-01: notes, abstract, and ending }
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
    if(pubOutST->notesBl & 1)
@@ -672,7 +705,21 @@ void blankPubmedST(
 
     // See if resting the line wrap settings
     if(blankWrapBl & 1) pubmedST->wrapUS = defLineWrap;
-    if(blankBreakBl & 1) pubmedSTSetBreak("\n", pubmedST);
+    if(blankBreakBl & 1)
+    { /*If blanking the line break type*/
+       switch(defBreakType)
+       { /*Switch: Check the default line break*/
+          case 0:                             /*Linux*/
+             pubmedSTSetBreak("\n", pubmedST);
+             break;
+          case 1:                             /*Windows*/
+             pubmedSTSetBreak("\r\n", pubmedST);
+             break;
+          default:                         /*Assume linux*/
+             pubmedSTSetBreak("\n", pubmedST);
+             break;
+       } /*Switch: Check the default line break*/
+    } /*If blanking the line break type*/
     if(blankPadBl & 1) pubmedSTSetPad("    ", pubmedST);
 
     // variables unique to the bibtex output
@@ -740,6 +787,10 @@ void blankPubmedST(
    pubmedST->articleTypeCStr[0] = '\0';
    pubmedST->lenArticleTypeStrUL = 0;
    pubmedST->lenArticleTypeLineOnUS = pubmedST->lenPadUC;
+
+   // Note (for unpublished works)
+   pubmedST->noteStr[0] = '\0';
+   pubmedST->lenNoteUC = 0;
  
    // journal abbreviation
    pubmedST->abrevJournalCStr[0] = '\0';
@@ -941,13 +992,71 @@ void findPublicationType(
     ) { // If this has not been published yet
         memcpy(pubmedST->bibTypeCStr, "Unpublished\0", 12);
         pubmedST->lenBibTypeStrUC = 11;
-        return;
+
+        memcpy(
+           pubmedST->noteStr,
+           "unpublished work on webpage at ",
+           32
+        );
+
+        /*Add length of the note, but do not count the
+        ` space. The space will be overwritten if a new
+        ` line is needed, else it will be accounted for
+        ` after checking the wrap
+        */
+        pubmedST->lenNoteUC = 31;
+
+        goto addUnpubNote;
     } // If this has not been published yet
 
     if(strstr(pubmedST->articleTypeCStr, "Preprint") != 0)
     { // If this has not been published yet
-        memcpy(pubmedST->bibTypeCStr, "Article\0", 8);
-        pubmedST->lenBibTypeStrUC = 7;
+        memcpy(pubmedST->bibTypeCStr, "Unpublished\0", 12);
+        pubmedST->lenBibTypeStrUC = 11;
+        memcpy(
+           pubmedST->noteStr,
+           "preprint on webpage at ",
+           23
+        );
+
+        pubmedST->lenNoteUC = 22;
+
+        addUnpubNote:
+
+        /*+10 to account for "  Note={},"*/
+        if(
+            10+pubmedST->lenNoteUC+pubmedST->lenDoiStrUC
+           >pubmedST->wrapUS
+        ){ /*If I need to wrap lines*/
+           memcpy(
+              &pubmedST->noteStr[pubmedST->lenNoteUC],
+              pubmedST->lineBreakCStr,
+              pubmedST->lenBreakUC
+           );
+
+           pubmedST->lenNoteUC += pubmedST->lenBreakUC;
+        } /*If I need to wrap lines*/
+
+        /*Else account for the space at the end*/
+        else ++pubmedST->lenNoteUC;
+
+        memcpy(
+           &pubmedST->noteStr[pubmedST->lenNoteUC],
+           "\\url{",
+           5
+        );  
+        pubmedST->lenNoteUC += 5;
+
+        memcpy(
+           &pubmedST->noteStr[pubmedST->lenNoteUC],
+           pubmedST->doiCStr,
+           pubmedST->lenDoiStrUC
+        );
+
+        pubmedST->lenNoteUC += pubmedST->lenDoiStrUC + 1;
+        pubmedST->noteStr[pubmedST->lenNoteUC] = '}';
+        pubmedST->noteStr[pubmedST->lenNoteUC] ='\0';
+
         return;
     } // If this has not been published yet
 
@@ -1011,7 +1120,21 @@ void findPublicationType(
     // Else I am unsure how to classify it. People can
     memcpy(pubmedST->bibTypeCStr, "Misc\0", 5);
     pubmedST->lenBibTypeStrUC = 4;
-    return;
+
+    memcpy(
+       pubmedST->noteStr,
+       "misc work on webpage at ",
+       23
+    );
+
+    /*Add length of the note, but do not count the
+    ` space. The space will be overwritten if a new
+    ` line is needed, else it will be accounted for
+    ` after checking the wrap
+    */
+    pubmedST->lenNoteUC = 22;
+
+    goto addUnpubNote;
 
     /*Bibtex publication types:
      @article: any article published in a periodical
@@ -1059,7 +1182,7 @@ void getPubmedEntry(
    '  - Finds out wich entry was read in and updates
    '    pubmedST if the information was useful
    '  o fun-06 sec-01: Working on abstract/title?
-   '  o fun-06 sec-02: Is this an abstract entry?
+   '  o fun-06 sec-02: Is this an abstract/doi/ppi entry?
    '  o fun-06 sec-03: Is this the publishing date?
    '  o fun-06 sec-04: Check if line on is the edition
    '  o fun-06 sec-05: Is this an full author name?
@@ -1128,8 +1251,18 @@ void getPubmedEntry(
    } // Switch; if continuing a journal entry
 
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
-   ^ Fun-06 Sec-02 Sub-01: On the abstract entry?
+   ^ Fun-06 Sec-02:
+   ^  - On the abstract, doi, or ppi entry?
+   ^  o fun-06 sec-02 sub-01:
+   ^    - Check if is an doi/ppi entry
+   ^  o fun-06 sec-02 sub-02:
+   ^    - Check if is an abstract entry
    \<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+
+   /******************************************************\
+   * Fun-06 Sec-02 Sub-01:
+   *  - Check if is an doi/ppi entry
+   \******************************************************/
 
    switch(*pubLineCStr)
    { // Switch; check the first character
@@ -1140,8 +1273,57 @@ void getPubmedEntry(
            --lenPubLineStrUL;
 
            // Check if is an entry I do not care about
-           // These are AID; AU (author names), and AD
+           // These are AU (author names), and AD
            // (author location).
+           if(
+              *onAbstractBl == 0 &&
+              *pubLineCStr == 'I' &&
+              *(pubLineCStr + 1) == 'D' &&
+              (
+                  *(pubLineCStr + 2) == ' '
+                || *(pubLineCStr + 2) == '-'
+              )
+           ) { /*If on an alternative DOI/pii line*/
+              pubLineCStr =
+                moveToStartOfPubEntry(
+                  pubLineCStr,
+                  &lenPubLineStrUL
+              );
+
+              trimNewLineAtEnd(
+                 pubLineCStr,
+                 &lenPubLineStrUL
+              );
+
+              if(strstr(pubLineCStr, "[doi]") != 0)
+              { // If this was a doi
+                  // Remove the space after the doi entry
+                  tmpCStr = strstr(pubLineCStr, " ");
+                  *tmpCStr = '\0';
+
+                  pubmedST->lenDoiStrUC =
+                      (unsigned char)(tmpCStr-pubLineCStr); 
+
+                  strcpy(pubmedST->doiCStr, pubLineCStr);
+              } // If this was a doi
+
+              else if(strstr(pubLineCStr, "[pii]") != 0)
+              { // else If this was a ppi line
+                  tmpCStr = strstr(pubLineCStr, " ");
+                  *tmpCStr = '\0';
+
+                  pubmedST->lenPPIStrUC =
+                      (unsigned char)(tmpCStr-pubLineCStr); 
+
+                  strcpy(pubmedST->ppiCStr, pubLineCStr);
+              } // else If this was a ppi line
+           } /*If on an alternative DOI/pii line*/
+
+           /**********************************************\
+           * Fun-06 Sec-02 Sub-02:
+           *  - Check if is an abstract entry
+           \**********************************************/
+
            if(*onAbstractBl == 0 && *pubLineCStr != 'B')
                return;
 
@@ -1179,7 +1361,6 @@ void getPubmedEntry(
 
            return;
        // Case for entries starting with A
-
 
        /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
        ^ Fun-06 Sec-03 Sub-01: Is publishing date?
@@ -1509,6 +1690,17 @@ void getPubmedEntry(
 
                strcpy(pubmedST->doiCStr, pubLineCStr);
            } // If this was a doi
+
+           else if(strstr(pubLineCStr, "[pii]") != 0)
+           { // else If this was a ppi line
+               tmpCStr = strstr(pubLineCStr, " ");
+               *tmpCStr = '\0';
+
+               pubmedST->lenPPIStrUC =
+                   (unsigned char)(tmpCStr-pubLineCStr); 
+
+               strcpy(pubmedST->ppiCStr, pubLineCStr);
+           } // else If this was a ppi line
 
            else
            { // Else was an electronic page number
@@ -2532,6 +2724,7 @@ void blankPubOutST(
   pubOutST->volBl = defPVolBl;
   pubOutST->issueBl = defPIssueBl;
   pubOutST->doiBl = defPDoiBl;
+  pubOutST->ppiBl = defPPPIBl;
   pubOutST->pgBl = defPPgBl;
 
   // These entires could be uesfull

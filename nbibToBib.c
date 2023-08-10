@@ -45,7 +45,9 @@
 '    o Return a power of 10
 '  - Fun-04 setBibPVal:
 '    o Sets weather to print a bibtext entry or not
-'  - Fun-05 pBibEntryHelp:
+'  - fun-05 pHelpMesg:
+'    o Prints out the general help message for this program
+'  - fun-06 pBibEntryHelp:
 '    o Prints out the help message for selecting which
 '      bibtex entries to print
 \~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -119,11 +121,23 @@ unsigned char setBibPVal(
   \~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 /*--------------------------------------------------------\
+| Output:
+|  - Prints:
+|    o Prints the help message to outFILE
+\--------------------------------------------------------*/
+void pHelpMesg(
+   FILE *outFILE
+);/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
+  ' Fun-05 TOC: pHelpMesg
+  '  - Prints out the general help message for this program
+  \~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/*--------------------------------------------------------\
 | Output: prints out bibtex entry help message to stdout
 \--------------------------------------------------------*/
 void pBibEntyHelp(
 );/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
-  ' Fun-05 TOC: Sub-01 Sec-01: pBibEntryHelp
+  ' Fun-06 TOC: pBibEntryHelp
   '  - Prints out the help message for selecting which
   '    bibtex entries to print
   \~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -180,62 +194,6 @@ int main(
    * Main Sec-01 Sub-02: help message
    \******************************************************/
 
-   char *helpCStr = "\
-   \n Use: Converts a .nbib file to a bibtex (.bib) file\
-   \n Run: pubmedToBib -nbib file.nbib [options...]\
-   \n Input:\
-   \n   -nbib file.pubmed: [Required]\
-   \n     o .nbib file to convert to bibtex (.bib) file.\
-   \n     o Make sure each citation (entry) in the file is\
-   \n       separated by a blank line.\
-   \n   -bib file.bib: [stdout]\
-   \n     o Name of the output bibtex (.bib) file.\
-   \n   -line-wrap 59: [59]\
-   \n     o Number of characters to have before breaking a\
-   \n       a line (32 to 60000 characters).\
-   \n     o -line-wrap 0: to turn of line wrapping.\
-   \n     o This only applies to the title, abstract,\
-   \n       authors, keywords, mesh terms, and tags.\
-   \n   -tag \"something\":  [No tags]\
-   \n     o Tags to add to the output .bib file for each\
-   \n       .pubmed entry.\
-   \n     o You can specify this option multiple times.\
-   \n     o Make sure to put call -line-wrap before -tag.\
-   \n       Otherwise default line wrapping will be used.\
-   \n   -break-unix:[Default]\
-   \n     o Uses a \'\\n\' mark new lines.\
-   \n   -break-win:[No]\
-   \n     o Uses just a \"\\r\\n\" mark new lines.\
-   \n     o Used to be how windows treated line breaks,\
-   \n       but may not apply any more.\
-   \n   -bib-help:\
-   \n     o Prints out all options for controlling which\
-   \n       bibtex entries are print out.\
-   \n Output:\
-   \n  o Prints a bibtex entry to stdout for each entry in\
-   \n    the .pubmed file.\
-   \n Requires:\
-   \n  o Unac (https://github.com/QuickDict/unac)\
-   \n    - unac is used to remove accents from names. This\
-   \n      prevents errors that might occur when programs\
-   \n      the bibtex file.\
-   \n    - This Can be disabled at compile time with\
-   \n      \"make noaccent\" (CFLAGS=\"-DNORMACCENT\"),\
-   \n      but will disable using the authors name in the\
-   \n      citation key or file name.\
-   ";
-
-    /* This was here until I found out that NCBI blocks
-       curl. The code should work in theory, but may not
-       work in real life
-    \n   -get-pmc-pdf: [No]\
-    \n     o Download the pdf for any file that has a\
-    \n       pubmed centeral (PMC) id.\
-    \n     o This can be enabled by \"make pdf"\
-    \n       (CFLAGS="-DPDF") \
-    \n  o Curl (https://github.com/curl/curl)\
-    */
-
    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
    ^ Main Sec-02: Get user input
    ^  o main sec-02 sub-01: Get user input
@@ -276,15 +234,20 @@ int main(
        if(strcmp(tmpCStr, "-h") == 0 ||
           strcmp(tmpCStr, "--h") == 0 ||
           strcmp(tmpCStr, "-help") == 0 ||
-          strcmp(tmpCStr, "--help") == 0
+          strcmp(tmpCStr, "--help") == 0 ||
+          strcmp(tmpCStr, "help") == 0
        ) { // If the user wanted the help message
-           printf("%s\n", helpCStr);
+           pHelpMesg(stdout);
            exit(0);
        } // If the user wanted the help message
 
-       if(strcmp(tmpCStr, "-bib-help") == 0)
-       { // If user wanted the bibtext help message
-         pBibEntyHelp();
+       if(
+          strcmp(tmpCStr, "-bib-help") == 0 ||
+          strcmp(tmpCStr, "-bib-h") == 0 ||
+          strcmp(tmpCStr, "bib-h") == 0 ||
+          strcmp(tmpCStr, "bib-help") == 0
+       ){ // If user wanted the bibtext help message
+         pBibEntyHelp(stdout);
          exit(0);
        } // If user wanted the bibtext help message
 
@@ -297,7 +260,8 @@ int main(
           strcmp(tmpCStr, "--v") == 0 ||
           strcmp(tmpCStr, "--V") == 0 ||
           strcmp(tmpCStr, "-version") == 0 ||
-          strcmp(tmpCStr, "--version") == 0
+          strcmp(tmpCStr, "--version") == 0 ||
+          strcmp(tmpCStr, "version") == 0
        ) { // If the user wanted the version number (date)
            printf("pubmedToBib version: %d\n", defVersion);
            exit(0);
@@ -346,10 +310,10 @@ int main(
        * Main Sec-02 Sub-05: Error is unknown parameter
        \**************************************************/
 
+       pHelpMesg(stderr);
        fprintf(
            stderr,
-           "%s\nInvalid paramter (%s) input\n",
-           helpCStr,
+           "Invalid paramter (%s) input\n",
            tmpCStr
        ); // Let user know about the error
 
@@ -853,6 +817,9 @@ unsigned char setBibPVal(
     else if(strcmp(parmCStr, "-p-doi") == 0)
       pubOutST->doiBl = 1;
 
+    else if(strcmp(parmCStr, "-p-ppi") == 0)
+      pubOutST->ppiBl = 1;
+
     else if(strcmp(parmCStr, "-p-page-number") == 0)
       pubOutST->pgBl = 1;
 
@@ -930,6 +897,9 @@ unsigned char setBibPVal(
     else if(strcmp(parmCStr, "-no-doi") == 0)
       pubOutST->doiBl = 0;
 
+    else if(strcmp(parmCStr, "-no-ppi") == 0)
+      pubOutST->ppiBl = 0;
+
     else if(strcmp(parmCStr, "-no-page-number") == 0)
       pubOutST->pgBl = 0;
 
@@ -990,11 +960,133 @@ unsigned char setBibPVal(
 } // setBibPVal
 
 /*--------------------------------------------------------\
+| Output:
+|  - Prints:
+|    o Prints the help message to outFILE
+\--------------------------------------------------------*/
+void pHelpMesg(
+   FILE *outFILE
+){/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
+  ' Fun-05 TOC: pHelpMesg
+  '  - Prints out the general help message for this program
+  \~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+   char *helpCStr = "\
+   \n Use: Converts a .nbib file to a bibtex (.bib) file\
+   \n Run: pubmedToBib -nbib file.nbib [options...]\
+   \n Input:\
+   \n   -nbib file.pubmed: [Required]\
+   \n     o .nbib file to convert to bibtex (.bib) file.\
+   \n     o Make sure each citation (entry) in the file is\
+   \n       separated by a blank line.\
+   \n   -bib file.bib: [stdout]\
+   \n     o Name of the output bibtex (.bib) file.";
+
+   fprintf(outFILE, "%s", helpCStr);
+
+   fprintf(
+      outFILE,
+      "\n   -line-wrap %i: [%i]",
+      defLineWrap,
+      defLineWrap
+   );
+
+   helpCStr="\
+   \n     o Number of characters to have before breaking a\
+   \n       a line (32 to 60000 characters).\
+   \n     o -line-wrap 0: to turn of line wrapping.\
+   \n     o This only applies to the title, abstract,\
+   \n       authors, keywords, mesh terms, and tags.";
+
+   fprintf(outFILE, "%s", helpCStr);
+
+   if(defPTagsBl)
+   { /*If the user has enabled tags*/
+    helpCStr="\
+    \n   -tag \"something\":  [No tags]\
+    \n     o Tags to add to the output .bib file for each\
+    \n       .pubmed entry.\
+    \n     o You can specify this option multiple times.\
+    \n     o Make sure to put call -line-wrap before -tag.\
+    \n       Otherwise default line wrapping will be used.\
+    ";
+
+    fprintf(outFILE, "%s", helpCStr);
+   } /*If the user has enabled tags*/
+
+   switch(defBreakType)
+   { /*Switch: check which style of line break using*/
+      case 0:
+      /*Case: printing unix style line breaks (just \n)*/
+         helpCStr="\
+         \n   -break-unix:[Yes]\
+         \n     o Uses a \'\\n\' mark new lines.\
+         \n   -break-win:[No]\
+         \n     o Uses just a \"\\r\\n\" mark new lines.\
+         \n     o Used to be how windows treated line\
+         \n       breaks, but may not apply any more.";
+         break;
+      /*Case: printing unix style line breaks (just \n)*/
+
+      case 1:
+      /*Case: printing windows style line breaks (\r\n)*/
+         helpCStr="\
+         \n   -break-unix:[No]\
+         \n     o Uses a \'\\n\' mark new lines.\
+         \n   -break-win:[Yes]\
+         \n     o Uses just a \"\\r\\n\" mark new lines.\
+         \n     o Used to be how windows treated line\
+         \n       breaks, but may not apply any more.";
+         break;
+      /*Case: printing windows style line breaks (\r\n)*/
+   } /*Switch: check which style of line break using*/
+
+   fprintf(outFILE, "%s", helpCStr);
+
+   helpCStr="\
+   \n   -bib-help:\
+   \n     o Prints out all options for controlling which\
+   \n       bibtex entries are print out.\
+   \n Output:\
+   \n  o Prints a bibtex entry to stdout for each entry in\
+   \n    the .pubmed file.";
+
+   fprintf(outFILE, helpCStr);
+
+   #ifndef NORMACCENT 
+    helpCStr="\
+    \n Built with unac:\
+    \n  o Unac from: (https://github.com/QuickDict/unac)\
+    \n    - the first authors last name is used in the\
+    \n      citation key.\
+    \n    - If you get file not UFT-8 errors. Try\
+    \n      iconv -f ISO-8859-1 -t UTF8 ref.bib > UTF8.bib\
+    \n      - This is likey do to the authors names in the\
+    \n        Authors={} entry not being converted.\
+    \n    - This Can be disabled at compile time with\
+    \n      \"make noaccent\" (CFLAGS=\"-DNORMACCENT\").\
+    ";
+
+   #else
+    helpCStr="\
+    \n No unac support:\
+    \n    - the first authors last name is not used in the\
+    \n      citation key.\
+    \n    - If you get file not UFT-8 errors. Try\
+    \n      iconv -f ISO-8859-1 -t UTF8 ref.bib > UTF8.bib\
+    ";
+   #endif
+
+   fprintf(outFILE, "%s\n", helpCStr);
+} /*pHelpMesg*/
+
+/*--------------------------------------------------------\
 | Output: prints out bibtex entry help message to stdout
 \--------------------------------------------------------*/
 void pBibEntyHelp(
+   FILE *outFILE
 ){/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
-  ' Fun-05 TOC: Sub-01 Sec-01: pBibEntryHelp
+  ' Fun-06 TOC: pBibEntryHelp
   '  - Prints out the help message for selecting which
   '    bibtex entries to print
   \~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -1004,100 +1096,269 @@ void pBibEntyHelp(
   \n   enabled or disabled for printing in a bibtex entry.\
   \n Most of these are not a standard bibtex format.\
   \n\
-  \n Options:\
-  \n  -p-citekey: [Yes]\
-  \n    o Print out the generated citation key for a\
-  \n      bibtex file.\
-  \n    o Disabled by: -no-citekey\
-  \n    o Format:\
-  \n      - With unac: author1-year-pmid-pmid#\
-  \n      - No unac: year-pmid-pmid#\
-  \n  -p-journal-id:[Yes]\
+  \n Options:";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPCiteKeyBl)
+     fprintf(outFILE, "\n  -p-citekey: [Yes]");
+  else
+     fprintf(outFILE, "\n  -p-citekey: [No]");
+
+  helpCStr="\
+     \n    o Print out the generated citation key for a\
+     \n      bibtex file.\
+     \n    o Disabled by: -no-citekey\
+     \n    o Format:\
+     \n      - With unac: author1-year-pmid-pmid#\
+     \n      - No unac: year-pmid-pmid#\
+  ";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPJournalIDBl)
+     fprintf(outFILE, "\n  -p-journal-id: [Yes]");
+  else
+     fprintf(outFILE, "\n  -p-journal-id: [No]");
+
+  helpCStr="\
   \n    o Prints out the journal id (not standard bibtex).\
-  \n    o Disabled by: -no-journal-id\
-  \n  -p-month:[Yes]\
-  \n    o Prints out the month of publication if found.\
-  \n    o Disabled by: -no-month\
-  \n    o pubmedToBib only used the DP entry, so this can\
-  \n      be missed when it is only in the DEP entry.\
-  \n  -p-day:[Yes]\
-  \n    o Prints out the day of publication if found.\
-  \n    o Disabled by: -no-day\
-  \n    o pubmedToBib only used the DP entry, so this can\
-  \n      be missed when it is only in the DEP entry.\
-  \n  -p-volume:[Yes]\
-  \n    o Prints out the volume number entry\
-  \n    o Disabled by: -no-volume\
-  \n  -p-issue:[Yes]\
-  \n    o Prints out the issue number entry\
-  \n    o Disabled by: -no-issue\
-  \n  -p-doi:[Yes]\
-  \n    o Prints out the doi\
-  \n    o Disabled by: -no-doi\
-  \n  -p-page-number:[Yes]\
-  \n    o Prints out the page number\
-  \n    o Disabled by: -no-page-number\
-  \n  -p-edition:[Yes]\
-  \n    o Prints out the edition\
-  \n    o Disabled by: -no-edition\
-  \n  -p-pmid:[Yes]\
-  \n    o Prints out the pmid number\
-  \n    o Disabled by: -no-pmid\
-  \n  -p-pmc:[Yes]\
-  \n    o Prints out the pubmed central id (PMC id)\
-  \n    o Disabled by: no-pmc\
-  \n  -p-isbn:[No]\
-  \n    o Prints out the ISBN number\
-  \n    o Disabled by: no-isbn\
-  \n  -p-issn:[Yes]\
-  \n    o Prints out the ISSN number\
-  \n    o Disabled by: no-issn\
-  \n  -p-url:[Yes]\
-  \n    o Prints out the full doi address\
-  \n    o Disabled by: no-url\
-  \n  -p-abstract:[Yes]\
+  \n    o Disabled by: -no-journal-id";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPMonthBl) fprintf(outFILE, "\n  -p-month:[Yes]");
+  else fprintf(outFILE, "\n  -p-month:[No]");
+
+  helpCStr="\
+   \n    o Prints out the month of publication if found.\
+   \n    o Disabled by: -no-month\
+   \n    o pubmedToBib only used the DP entry, so this can\
+   \n      be missed when it is only in the DEP entry.";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPDayBl) fprintf(outFILE, "\n  -p-day:[Yes]");
+  else fprintf(outFILE, "\n  -p-day:[No]");
+
+  helpCStr="\
+   \n    o Prints out the day of publication if found.\
+   \n    o Disabled by: -no-day\
+   \n    o pubmedToBib only used the DP entry, so this can\
+   \n      be missed when it is only in the DEP entry.";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPVolBl) fprintf(outFILE, ":\n  -p-volume:[Yes]");
+  else fprintf(outFILE, ":\n  -p-volume:[No]");
+
+  helpCStr="\
+     \n    o Prints out the volume number entry\
+     \n    o Disabled by: -no-volume";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPIssueBl) fprintf(outFILE, "\n  -p-issue:[Yes]");
+  else fprintf(outFILE, "\n  -p-issue:[No]");
+
+  helpCStr="\
+     \n    o Prints out the issue number entry\
+     \n    o Disabled by: -no-issue";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPDoiBl) fprintf(outFILE, "\n  -p-doi:[Yes]");
+  else fprintf(outFILE, "\n  -p-doi:[No]");
+
+  helpCStr="\
+     \n    o Prints out the doi\
+     \n    o Disabled by: -no-doi";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPPPIBl) fprintf(outFILE, "\n  -p-ppi:[Yes]");
+  else fprintf(outFILE, "\n  -p-ppi:[No]");
+
+  helpCStr="\
+     \n    o Prints out the ppi\
+     \n    o Disabled by: -no-ppi";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPPgBl) fprintf(outFILE,"\n  -p-page-number:[Yes]");
+  else fprintf(outFILE,"\n  -p-page-number:[No]");
+
+  helpCStr="\
+     \n    o Prints out the page number\
+     \n    o Disabled by: -no-page-number";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+
+  if(defPEditionBl)fprintf(outFILE,"\n  -p-edition:[Yes]");
+  else fprintf(outFILE,"\n  -p-edition:[No]");
+
+  helpCStr="\
+     \n    o Prints out the edition\
+     \n    o Disabled by: -no-edition";
+  
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPPmidBl) fprintf(outFILE, "\n  -p-pmid:[Yes]");
+  else fprintf(outFILE, "\n  -p-pmid:[No]");
+
+  helpCStr="\
+     \n    o Prints out the pmid number\
+     \n    o Disabled by: -no-pmid";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPPmcBl) fprintf(outFILE, "\n  -p-pmc:[Yes]");
+  else fprintf(outFILE, "\n  -p-pmc:[No]");
+
+  helpCStr="\
+     \n    o Prints out the pubmed central id (PMC id)\
+     \n    o Disabled by: no-pmc";
+  
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPIsbnBl) fprintf(outFILE, "\n  -p-isbn:[Yes]");
+  else fprintf(outFILE, "\n  -p-isbn:[No]");
+
+  helpCStr="\
+     \n    o Prints out the ISBN number\
+     \n    o Disabled by: no-isbn";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPIssnBl) fprintf(outFILE, "\n  -p-issn:[Yes]");
+  else fprintf(outFILE, "\n  -p-issn:[No]");
+
+  helpCStr="\
+     \n    o Prints out the ISSN number\
+     \n    o Disabled by: no-issn";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPUrlBl) fprintf(outFILE, "\n  -p-url:[Yes]");
+  else fprintf(outFILE, "\n  -p-url:[No]");
+
+  helpCStr="\
+     \n    o Prints out the full doi address\
+     \n    o Disabled by: no-url";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPAbstractBl)
+     fprintf(outFILE, "\n  -p-abstract:[Yes]");
+  else fprintf(outFILE, "\n  -p-abstract:[No]");
+
+  helpCStr="\
   \n    o Prints out the articles abstract\
-  \n    o Disabled by: no-abstract\
-  \n  -p-journal-short:[No]\
+  \n    o Disabled by: no-abstract";
+  
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPAbvJournalBl)
+     fprintf(outFILE, "\n  -p-journal-short:[Yes]");
+  else fprintf(outFILE, "\n  -p-journal-short:[No]");
+
+  helpCStr="\
   \n    o Prints out the abbreviated journal name\
-  \n    o Disabled by: no-journal-short\
-  \n  -p-article-type:[No]\
+  \n    o Disabled by: no-journal-short";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPArticleTypeBl)
+     fprintf(outFILE, "\n  -p-article-type:[Yes]");
+  else fprintf(outFILE, "\n  -p-article-type:[No]");
+
+  helpCStr="\
   \n    o Prints out the list of article types pubmed\
   \n      classified this article as\
-  \n    o Disabled by: no-article-type\
-  \n  -p-language:[No]\
+  \n    o Disabled by: no-article-type";
+  
+  fprintf(outFILE, "%s", helpCStr);
+
+  
+  if(defPLangBl) fprintf(outFILE, "\n  -p-language:[Yes]");
+  else fprintf(outFILE, "\n  -p-language:[No]");
+
+  helpCStr="\
   \n    o Print out the language the article was published\
   \n      in\
-  \n    o Disabled by: no-language\
-  \n  -p-mesh-terms:[No]\
+  \n    o Disabled by: no-language";
+  
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPMeshBl)fprintf(outFILE,"\n  -p-mesh-terms:[Yes]");
+  else fprintf(outFILE, "\n  -p-mesh-terms:[No]");
+
+  helpCStr="\
   \n    o Print out the mesh terms pubmed added to the\
   \n      article\
-  \n    o Disabled by: -no-mesh-terms\
-  \n  -p-keywords:[Yes]\
+  \n    o Disabled by: -no-mesh-terms";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPKeyWordsBl)
+     fprintf(outFILE, "\n  -p-keywords:[Yes]");
+  else fprintf(outFILE, "\n  -p-keywords:[No]");
+
+  helpCStr="\
   \n    o Print out the keywords the authors used\
-  \n    o Disabled by: -no-keywords\
-  \n  -p-file-tag:[Yes]\
+  \n    o Disabled by: -no-keywords";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPFileNameBl)
+     fprintf(outFILE, "\n  -p-file-tag:[Yes]");
+  else fprintf(outFILE, "\n  -p-file-tag:[No]");
+
+  helpCStr="\
   \n    o Print out a File={citekey.pdf}, tag.\
   \n    o This tag is useful to me, but maybe not to\
   \n      others\
-  \n    o Disable by: -no-file-tag\
-  \n  -p-tags-tag:[Yes]\
+  \n    o Disable by: -no-file-tag";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPTagsBl) fprintf(outFILE, "\n  -p-tags-tag:[Yes]");
+  else fprintf(outFILE, "\n  -p-tags-tag:[No]");
+
+  helpCStr="\
   \n    o Print out Tags={tag1, tag2, tag3, ..., tabn},\
   \n    o This tag is useful to me, but may not be to\
   \n      others. It is my way of adding in my own\
   \n      keywords\
-  \n    o Disable by: -no-tags-tag\
-  \n  -p-supplemental-tag:[Yes]\
+  \n    o Disable by: -no-tags-tag";
+
+  fprintf(outFILE, "%s", helpCStr);
+
+  if(defPSupBl)
+     fprintf(outFILE, "\n  -p-supplemental-tag:[Yes]");
+  else fprintf(outFILE, "\n  -p-supplemental-tag:[No]");
+
+  helpCStr="\
   \n    o Prints out an Supplement={}, tag for\
   \n      supplemental files. This tag is something I may\
   \n      use, but may not be useful to others\
-  \n    o Disable by: -no-supplemental-tag\
-  \n  -p-notesp-tag:[Yes]\
+  \n    o Disable by: -no-supplemental-tag";
+
+  fprintf(outFILE, helpCStr);
+
+  if(defPNotesBl)
+     fprintf(outFILE, "\n  -p-notesp-tag:[Yes]");
+  else fprintf(outFILE, "\n  -p-notesp-tag:[No]");
+
+  helpCStr="\
   \n    o Prints out a NotesP{}, tag. I use this tag to\
   \n      my notes about the article. This is useful to\
   \n      me, but may not be useful to others\
+  \n    o This is different from Note{}, which is printed\
+  \n      for unplished or Misc articles.\
   \n    o Disable by: -no-notesp-tag\
   \n";
 
-  printf("%s", helpCStr);
+  fprintf(outFILE, "%s", helpCStr);
 } // pBibEntryHelp

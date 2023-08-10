@@ -1,5 +1,6 @@
 # remove -g when done debuging
 CC=cc
+PREFIX=/usr/local/bin
 
 LDFLAGS=\
     -L/usr/local/lib\
@@ -11,7 +12,8 @@ LDFLAGS=\
 
 CFLAGS=\
     -Wall\
-	-O3
+    --std=c99 \
+	 -O3
 CPPFLAGS=\
     -I/usr/local/include\
     -I/usr/include
@@ -54,14 +56,34 @@ all: getLibiconvStatic getUnac
 
 make normaccent:
 	$(CC)\
+      --std=c99\
       -static\
       -DNORMACCENT\
       $(CFLAGS)\
       $(gccArgs)
 
+# this is here for debuging
+make openbsd:
+	egcc \
+      --std=c99\
+      -static\
+      -DNORMACCENT\
+      $(CFLAGS)\
+      $(gccArgs)
+
+install:
+	cp nbibToBib $(PREFIX)/nbibToBib;
+	chmod a+x $(PREFIX)/nbibToBib;
+
+cleanall: clean cleandepend
+
 clean:
 	printf "Removing complied files from static libiconv\n"
 	rm -r lib include share bin
+
+cleandepend:
+	rm libiconv-1.9.1.tar.gz;
+	rm unac.h unac.c;
 
 # Get a static build of libiconv
 getLibiconvStatic:

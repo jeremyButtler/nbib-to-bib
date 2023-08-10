@@ -1,9 +1,10 @@
 #include <stdio.h>
 
-#define defVersion 20230623 // Started 20230412
+#define defVersion 20230810 // Started 20230412
 #define defGetPdf 0   // Download pdf if found a PMC id
                       // Pubmed blocks curl; does not work
 #define defLineWrap 59 // Default line wrapping limit
+#define defBreakType 0 // 0 is for linux; 1 is for windows
 
 // The variables to adjust the padding size and type
 // (PAD_C_STR & LEN_PAD_UC) can be found at the top of
@@ -18,6 +19,7 @@
 #define defPVolBl 1       // 1: Print out volume number
 #define defPIssueBl 1     // 1: Print out issue number
 #define defPDoiBl 1       // 1: Print out doi number
+#define defPPPIBl 0       // 1: Print out ppi
 #define defPPgBl 1        // 1: Print out page number
 
 //  These might be helpfull

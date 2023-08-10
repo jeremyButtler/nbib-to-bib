@@ -1060,7 +1060,7 @@ void pHelpMesg(
     \n    - the first authors last name is used in the\
     \n      citation key.\
     \n    - If you get file not UFT-8 errors. Try\
-    \n      iconv -f ISO-8859-1 -t UTF8 ref.bib > UTF8.bib\
+    \n      iconv -f ISO-8859-1 -t UTF-8 ref.bib>UTF8.bib\
     \n      - This is likey do to the authors names in the\
     \n        Authors={} entry not being converted.\
     \n    - This Can be disabled at compile time with\
@@ -1073,7 +1073,7 @@ void pHelpMesg(
     \n    - the first authors last name is not used in the\
     \n      citation key.\
     \n    - If you get file not UFT-8 errors. Try\
-    \n      iconv -f ISO-8859-1 -t UTF8 ref.bib > UTF8.bib\
+    \n      iconv -f ISO-8859-1 -t UTF-8 ref.bib>UTF8.bib\
     ";
    #endif
 

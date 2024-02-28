@@ -194,9 +194,14 @@ Dependencies:
 - unac (Downloaded during installation)
   - [https://github.com/QuickDict/unac](https://github.com/QuickDict/unac)
   - Removed with make normaccent
+  - QuickDict is under the GLP 2 license, so use
+    `make normaccent` if you do not want an GLP 2
+    dependency. That is why I have this program download
+    quickDict and not have it here. If I could get around
+    quickDict I would.
 - libconiv-1.9.1 (Download during installion)
   - [ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz](ftp://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.9.1.tar.gz)
-  - Removed with make normaccent
+  - Removed with `make normaccent`
 - unix cmd programs used in build (removed by
   make normaccent)
   - curl: Used to download libiconv-1.9.1
